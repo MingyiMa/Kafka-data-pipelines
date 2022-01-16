@@ -1,10 +1,10 @@
-package com.github.mingyima.kafka
+package com.github.mingyima.kafka.consumer
 
-import org.slf4j.{Logger, LoggerFactory}
-import org.apache.spark.sql.{DataFrame, SparkSession}
-import org.apache.spark.sql.types._
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.streaming.Trigger
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.slf4j.{Logger, LoggerFactory}
 
 object Consumer {
   private val logger: Logger = LoggerFactory.getLogger(this.getClass)
@@ -29,7 +29,7 @@ object Consumer {
       .load()
 
     val query = transform(raw)
-      .withWatermark("timestamp","5 seconds")
+      .withWatermark("timestamp", "5 seconds")
       .groupBy(window(col("timestamp"), "30 seconds"), col("name"))
       .agg(round(avg(col("price")), 2) as "average price")
       .withColumn("timestamp", col("window.end"))

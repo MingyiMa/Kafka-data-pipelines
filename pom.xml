@@ -8,7 +8,15 @@
     <artifactId>kafka-data-pipelines</artifactId>
     <version>1.0</version>
 
+    <properties>
+        <spark.version>3.2.0</spark.version>
+        <scala.version>2.13.5</scala.version>
+        <kafka.version>2.8.0</kafka.version>
+    </properties>
+
     <build>
+        <sourceDirectory>${project.basedir}/src/main/scala</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/scala</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -19,14 +27,20 @@
                     <target>11</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.github.mingyima.kafka.producer.Producer</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-    <properties>
-        <spark.version>3.2.0</spark.version>
-        <scala.version>2.13.5</scala.version>
-        <kafka.version>2.8.0</kafka.version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -77,6 +91,11 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>31.0.1-jre</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>3.3.0</version>
         </dependency>
     </dependencies>
 

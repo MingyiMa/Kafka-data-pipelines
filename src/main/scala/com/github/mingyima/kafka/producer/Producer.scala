@@ -1,12 +1,13 @@
-package com.github.mingyima.kafka
+package com.github.mingyima.kafka.producer
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.google.common.util.concurrent.RateLimiter
-import org.apache.kafka.clients.producer.ProducerConfig._
-import org.apache.kafka.clients.producer._
+import org.apache.kafka.clients.producer.ProducerConfig.{BOOTSTRAP_SERVERS_CONFIG, KEY_SERIALIZER_CLASS_CONFIG, VALUE_SERIALIZER_CLASS_CONFIG}
+import org.apache.kafka.clients.producer.{Callback, KafkaProducer, ProducerRecord, RecordMetadata}
 import org.apache.kafka.common.serialization.StringSerializer
 import org.slf4j.{Logger, LoggerFactory}
+
 import java.util.{Date, Properties}
 
 object Producer extends Runnable {

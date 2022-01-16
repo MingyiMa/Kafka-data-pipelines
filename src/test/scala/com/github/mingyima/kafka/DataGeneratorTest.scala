@@ -1,5 +1,7 @@
 package com.github.mingyima.kafka
 
+import com.github.mingyima.kafka.producer.{DataGenerator, Ticker}
+
 class DataGeneratorTest extends SparkTest {
   val tickers = Seq(Ticker("AMZN", 1902), Ticker("MSFT", 107), Ticker("AAPL", 215))
 

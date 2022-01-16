@@ -1,7 +1,8 @@
-package com.github.mingyima.kafka
+package com.github.mingyima.kafka.producer
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ObjectNode
+
 import scala.util.Random
 
 case class Ticker(

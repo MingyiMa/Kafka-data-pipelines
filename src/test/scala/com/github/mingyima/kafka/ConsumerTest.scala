@@ -1,5 +1,7 @@
 package com.github.mingyima.kafka
 
+import com.github.mingyima.kafka.consumer.Consumer
+import com.github.mingyima.kafka.producer.Producer
 import org.apache.spark.sql.types._
 import org.apache.spark.sql._
 
