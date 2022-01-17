@@ -20,11 +20,11 @@ object Producer extends Runnable {
   // producer config
   val properties: Properties = new Properties()
   val topic = "stock"
-  val bootstrapServer = "127.0.0.1:9092"
   val keySerializer: String = classOf[StringSerializer].getName
   val valueSerializer = "org.springframework.kafka.support.serializer.JsonSerializer"
 
   def main(args: Array[String]): Unit = {
+    val bootstrapServer = if (args.length != 0) args(0) else "127.0.0.1:9092"
     properties.setProperty(BOOTSTRAP_SERVERS_CONFIG, bootstrapServer)
     properties.setProperty(KEY_SERIALIZER_CLASS_CONFIG, keySerializer)
     properties.setProperty(VALUE_SERIALIZER_CLASS_CONFIG, valueSerializer)
