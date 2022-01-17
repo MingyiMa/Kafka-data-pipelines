@@ -13,37 +13,42 @@ services:
       - '2181:2181'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+    volumes:
+      - "zookeeper_data:/bitnami"
   kafka:
     image: 'bitnami/kafka:latest'
     networks:
       - app-tier
     ports:
       - '9092:9092'
+    volumes:
+      - "kafka_data:/bitnami"
     environment:
-      - KAFKA_BROKER_ID=1
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
+    command:
+      - kafka-topics.sh --bootstrap-server kafka:9092 --topic stock --create --partitions 3 --replication-factor 1
     depends_on:
       - zookeeper
-#  spark:
-#    image: 'bitnami/spark:latest'
-#    networks:
-#      - app-tier
-#    environment:
-#      - SPARK_MODE=master
-#      - SPARK_RPC_AUTHENTICATION_ENABLED=no
-#      - SPARK_RPC_ENCRYPTION_ENABLED=no
-#      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
-#      - SPARK_SSL_ENABLED=no
-#    ports:
-#      - '8080:8080'
-  app:
+  producer:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile_Producer
     networks:
       - app-tier
     depends_on:
       - kafka
+  consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile_Consumer
+    networks:
+      - app-tier
+    depends_on:
+      - producer
+
+volumes:
+  zookeeper_data:
+    driver: local
+  kafka_data:
+    driver: local

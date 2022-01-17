@@ -11,9 +11,10 @@ object Consumer {
 
   // consumer config
   val topic = "stock"
-  val bootstrapServer = "127.0.0.1:9092"
 
   def main(args: Array[String]): Unit = {
+    val bootstrapServer = if (args.length != 0) args(0) else "127.0.0.1:9092"
+
     val spark: SparkSession = SparkSession.builder()
       .appName(this.getClass.getSimpleName)
       .master("local[2]")
