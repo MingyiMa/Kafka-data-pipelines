@@ -11,4 +11,6 @@ RUN mvn -f /home/app/pom.xml clean package
 #
 FROM adoptopenjdk/openjdk11:alpine
 COPY --from=build /home/app/target/kafka-data-pipelines-1.0-jar-with-dependencies.jar /usr/local/app/kafka-data-pipelines.jar
-ENTRYPOINT ["java","-jar","/usr/local/app/kafka-data-pipelines.jar"]
+
+# keep container running
+ENTRYPOINT ["tail", "-f", "/dev/null"]

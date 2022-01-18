@@ -39,6 +39,8 @@ object Producer extends Runnable {
 
       val tickers = Seq(Ticker("AMZN", 1902), Ticker("MSFT", 107), Ticker("AAPL", 215))
       var counter = 1
+
+      // create 10 tokes per sec
       val rateLimiter = RateLimiter.create(10)
 
       Thread.sleep(1000)

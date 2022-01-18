@@ -20,4 +20,5 @@ RUN wget https://apache.mirror.iphh.net/spark/spark-3.2.0/spark-3.2.0-bin-hadoop
 
 RUN apk update && apk add bash
 
-ENTRYPOINT ["java","-jar","/usr/local/app/kafka-data-pipelines.jar"]
+# keep container running
+ENTRYPOINT ["tail", "-f", "/dev/null"]
