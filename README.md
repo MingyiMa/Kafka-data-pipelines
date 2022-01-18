@@ -2,6 +2,7 @@
 ### Step 1 - Download the git repo
 ```bash
 git clone https://github.com/MingyiMa/Kafka-data-pipelines.git
+cd Kafka-data-pipelines
 ```
 ### Step 2 - Run Docker-compose
 ```bash
@@ -15,11 +16,11 @@ docker exec -d kafka-data-pipelines-kafka-1 kafka-topics.sh --bootstrap-server k
 ```bash
 docker exec -it kafka-data-pipelines-producer-1 java -cp /usr/local/app/kafka-data-pipelines.jar com.github.mingyima.kafka.producer.Producer kafka:9092
 ```
-### Step 5 - Start the consumer
+### Step 5 - Start the consumer with a new terminal
 ```bash
 docker exec -it kafka-data-pipelines-consumer-1 bash /usr/local/app/spark/bin/spark-submit \
-  --class com.github.mingyima.kafka.consumer.Consumer \
-  --master local[2] \
+  --class "com.github.mingyima.kafka.consumer.Consumer" \
+  --master "local[2]" \
   /usr/local/app/kafka-data-pipelines.jar \
   kafka:9092
 ```
